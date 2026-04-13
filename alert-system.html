@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+</html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alert System | מערכת התראות</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 95,95 5,95' fill='%23c0392b'/%3E%3Crect x='44' y='35' width='12' height='30' fill='white'/%3E%3Crect x='44' y='72' width='12' height='12' fill='white'/%3E%3C/svg%3E" type="image/svg+xml">
+  <link rel="stylesheet" href="alert-system.css">
+</head>
+
+<body>
+  <header class="oref-header">
+    <div class="header-container">
+      <div class="logo-section">
+        <svg class="oref-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,5 95,95 5,95" fill="#c0392b"/>
+          <rect x="44" y="35" width="12" height="30" fill="white"/>
+          <rect x="44" y="72" width="12" height="12" fill="white"/>
+        </svg>
+        <div class="header-text">
+          <h1 class="main-title">מערכת התראות</h1>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="emergency-banner">
+          <span class="emergency-text"><svg class="emergency-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z" fill="white"/><circle cx="12" cy="9" r="2.5" fill="#c0392b"/></svg> מצב חירום פעיל</span>
+        </div>
+        <button id="header-logout-btn" class="btn btn-logout" onclick="logout()" style="display:none">יציאה</button>
+      </div>
+    </div>
+  </header>
+
+  <datalist id="areas">
+    <option value="דרום"></option>
+    <option value="ירושלים"></option>
+    <option value="מרכז"></option>
+    <option value="צפון"></option>
+    <option value="שפלה"></option>
+  </datalist>
+
+  <datalist id="levels">
+    <option value="גבוהה"></option>
+    <option value="בינונית"></option>
+    <option value="נמוכה"></option>
+    <option value="הודעה"></option>
+  </datalist>
+
+  <template id="entry-template">
+    <div class="entry-container">
+      <div class="welcome-section">
+        <h2 class="welcome-title">אתר ההתראות הרשמי</h2>
+        <p class="welcome-subtitle">היכנסו למערכת ההתראות הלאומית</p>
+      </div>
+      <div class="auth-buttons">
+        <button id="login-button" class="btn btn-primary" onclick="showLogin()">כניסה</button>
+        <button id="signup-button" class="btn btn-secondary" onclick="showSignup()">הרשמה</button>
+      </div>
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="card-icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><polygon points="24,4 46,44 2,44" fill="#c0392b" opacity="0.15"/><polygon points="24,4 46,44 2,44" fill="none" stroke="#c0392b" stroke-width="3"/><rect x="21" y="18" width="6" height="14" rx="2" fill="#c0392b"/><rect x="21" y="35" width="6" height="6" rx="2" fill="#c0392b"/></svg></div>
+          <h3>התראות בזמן אמת</h3>
+          <p>קבלו התראות מיידיות לאזור מגוריכם</p>
+        </div>
+        <div class="info-card">
+          <div class="card-icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4 L42 12 L42 26 C42 35 34 42 24 46 C14 42 6 35 6 26 L6 12 Z" fill="#2980b9" opacity="0.15"/><path d="M24 4 L42 12 L42 26 C42 35 34 42 24 46 C14 42 6 35 6 26 L6 12 Z" fill="none" stroke="#2980b9" stroke-width="3"/><polyline points="16,24 22,30 32,18" stroke="#2980b9" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>הוראות בטיחות</h3>
+          <p>קבלו הנחיות לפעולה במצבי חירום</p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="signup-template">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2 class="auth-title">הרשמה למערכת</h2>
+          <p class="auth-subtitle">יצירת חשבון חדש</p>
+        </div>
+        <form id="signup-form" class="auth-form">
+          <div class="form-group">
+            <label for="sign-username">שם מלא</label>
+            <input type="text" id="sign-username" name="sign-username" placeholder="הכניסו את שמכם המלא" required>
+          </div>
+          <div class="form-group">
+            <label for="sign-email">כתובת אימייל</label>
+            <input type="email" id="sign-email" name="sign-email" placeholder="example@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="sign-password">סיסמה</label>
+            <input type="password" id="sign-password" name="sign-password" placeholder="בחרו סיסמה חזקה" required>
+          </div>
+          <div class="form-group">
+            <label for="area">אזור מגורים</label>
+            <input type="text" id="area" name="area" list="areas" placeholder="בחרו את אזור מגוריכם" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" onclick="signup(event)">הרשמה</button>
+          <div class="auth-switch">
+            <p>יש לך כבר חשבון? <a href="#login" class="auth-link" onclick="showLogin(); return false;">כניסה</a></p>
+          </div>
+        </form>
+        <div id="signup-message" class="message-container"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="login-template">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2 class="auth-title">כניסה למערכת</h2>
+          <p class="auth-subtitle">היכנסו עם פרטי החשבון שלכם</p>
+        </div>
+        <form id="login-form" class="auth-form">
+          <div class="form-group">
+            <label for="login-email">כתובת אימייל</label>
+            <input type="email" id="login-email" name="login-email" placeholder="example@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="login-password">סיסמה</label>
+            <input type="password" id="login-password" name="login-password" placeholder="הכניסו את הסיסמה" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" onclick="login(event)">כניסה</button>
+          <div class="auth-switch">
+            <p>עדיין אין לך חשבון? <a href="#signup" class="auth-link" onclick="showSignup(); return false;">הרשמה</a></p>
+          </div>
+        </form>
+        <div id="login-message" class="message-container"></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="administrator-template">
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h2 class="dashboard-title">לוח בקרה - מנהל מערכת</h2>
+      </div>
+      <div id="administrator-menubar" class="admin-toolbar">
+        <div class="toolbar-section">
+          <button id="btnGetAllAlerts-administator" class="btn btn-secondary" onclick="getAllAlerts('administrator')">כל ההתראות</button>
+          <button id="addAlertBtn" class="btn btn-primary" onclick="addAlert()">הוסף התראה</button>
+        </div>
+        <div class="toolbar-section">
+          <input type="text" id="areaInput" name="areaInput" list="areas" class="area-input" placeholder="בחר אזור">
+          <button id="btnGetAlertByArea" class="btn btn-secondary" onclick="getAlertsByArea('administrator')">חיפוש לפי אזור</button>
+        </div>
+      </div>
+      <div id="administratorPresentAlerts" class="alerts-container"></div>
+    </div>
+  </template>
+
+  <template id="user-template">
+    <div class="user-dashboard">
+      <div class="dashboard-header">
+        <h2 class="dashboard-title">התראות אישיות</h2>
+      </div>
+      <div id="user-menubar" class="user-toolbar">
+        <button id="btnGetMyArea" class="btn btn-primary" onclick="getAlertsByArea('user')">התראות באזור שלי</button>
+        <button id="btnGetAllAlerts-user" class="btn btn-secondary" onclick="getAllAlerts('user')">כל ההתראות</button>
+      </div>
+      <div id="userPresentAlerts" class="alerts-container"></div>
+    </div>
+  </template>
+  <div id="main-content"></div>
+</body>
+<script src="JS/DB/alertsDB.js"></script>
+<script src="JS/DB/usersDB.js"></script>
+<script src="JS/SERVERS/alertsServer.js"></script>
+<script src="JS/SERVERS/usersServer.js"></script>
+<script src="JS/network.js"></script>
+<script src="JS/FXML.js"></script>
+<script src="JS/viewAlerts.js"></script>
+<script src="JS/client.js"></script>
+<script src="JS/administrator.js"></script>
+<script src="JS/loginSignup.js"></script>
+<script src="JS/management.js"></script>
+
+</html>
