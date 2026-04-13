@@ -103,7 +103,7 @@ alert-system/
 
 ## LIVE DEMO
 
-You can see the system in action at: [Live Demo](link-to-live-demo)
+You can see the system in action at: [Live Demo](https://tzippitzukrov.github.io/js-alert-system/)
 
 ## Contributing
 
